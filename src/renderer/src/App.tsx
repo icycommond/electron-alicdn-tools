@@ -7,10 +7,10 @@ const types = ['File', 'Directory']
 function App(): JSX.Element {
   const [type, setType] = useState(types[0])
   const [url, setUrl] = useState('')
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   /** 弹窗控制 */
-  const [messageApi, contextHolder] = message.useMessage();
+  const [messageApi, contextHolder] = message.useMessage()
 
   /** 点击提交 */
   const ipcHandle = () => {
@@ -22,18 +22,22 @@ function App(): JSX.Element {
   useEffect(() => {
     /** 接收主进程发送的消息 */
     window.electron.ipcRenderer.on('msg', (_, msg) => {
-      setLoading(false);
-      messageApi.info(msg);
+      setLoading(false)
+      messageApi.info(msg)
     })
   }, [])
 
   return (
     <>
       {contextHolder}
-      <div className="flex flex-col gap-4 mx-auto w-[800px] max-width-[100%]">
+      <div
+        className="flex flex-col gap-4 mx-auto"
+        style={{ margin: '0 auto', maxWidth: '90%', width: 800, display: 'flex', flexDirection: 'column', gap: 20 }}
+      >
         <Select
           size="large"
           className="w-full"
+          style={{ width: '100%' }}
           value={type}
           options={types.map((t) => ({ value: t, lable: t }))}
           onChange={(e) => {
@@ -47,7 +51,13 @@ function App(): JSX.Element {
             setUrl(e.target.value)
           }}
         />
-        <Button className="w-full" type="primary" loading={loading} onClick={ipcHandle}>
+        <Button
+          className="w-full"
+          style={{ width: '100%' }}
+          type="primary"
+          loading={loading}
+          onClick={ipcHandle}
+        >
           Submit
         </Button>
       </div>
